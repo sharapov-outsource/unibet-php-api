@@ -1,0 +1,32 @@
+{
+    "name": "sharapov/unibet-php-api",
+    "description": "A simple PHP implementation for Unibet's JSON API",
+    "type": "library",
+    "license": "GPL-3.0",
+    "keywords": ["Unibet", "API", "REST+JSON", "JSON"],
+    "homepage": "http://sharapov.biz/",
+    "authors": [
+        {
+            "name": "Alexander Sharapov",
+            "email": "alexander@sharapov.biz",
+            "homepage": "http://sharapov.biz",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "guzzlehttp/guzzle": "6.2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sharapov\\UnibetPHP\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+        }
+    },
+    "extra": []
+}
