@@ -120,6 +120,17 @@ class UnibetAPI {
   }
 
   /**
+   * Clear endpoints chain
+   *
+   * @return \Sharapov\UnibetPHP\UnibetAPI
+   */
+  public function clear() {
+    $this->_endpoint = null;
+
+    return $this;
+  }
+
+  /**
    * Send request
    *
    * @param string $responseFormat
