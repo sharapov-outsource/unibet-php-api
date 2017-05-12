@@ -39,14 +39,34 @@ class UnibetAPI {
     $this->_queryParams = $this->_arrayMerge( $this->_queryParams, $params );
   }
 
+  /**
+   * Set HTTP client options
+   *
+   * @param array $options
+   */
   public function setClientOptions( array $options ) {
     $this->_clientOptions = $options;
   }
 
+  /**
+   * Get HTTP client options
+   *
+   * @param null $option
+   *
+   * @return array|mixed
+   */
   public function getClientOptions( $option = null ) {
     return ( $option ) ? $this->_clientOptions[ $option ] : $this->_clientOptions;
   }
 
+  /**
+   * Catch undefined method and pass it to the url chain
+   *
+   * @param $endpoint
+   * @param $b
+   *
+   * @return \Sharapov\UnibetPHP\UnibetAPI
+   */
   public function __call( $endpoint, $b ) {
     $this->_endpoint = $this->_endpoint . '/' . $endpoint;
     if ( $b ) {
@@ -79,7 +99,24 @@ class UnibetAPI {
    * @throws \Sharapov\UnibetPHP\UnibetAPIException
    */
   public function xml() {
-    return $this->_request('xml');
+    return $this->_request( 'xml' );
+  }
+
+  /**
+   * Set the full url to be requested from unibet
+   *
+   * @param            $url
+   * @param array|null $b
+   *
+   * @return \Sharapov\UnibetPHP\UnibetAPI
+   * @throws \Sharapov\UnibetPHP\UnibetAPIException
+   */
+  public function setRequestUrl( $url, array $b = null ) {
+    if ( ! is_null( $this->_endpoint ) ) {
+      throw new UnibetAPIException( "You can't loop this class by this method" );
+    }
+
+    return new UnibetAPI( $this->_arrayMerge( $this->_queryParams, $b ), $url );
   }
 
   /**
@@ -90,7 +127,7 @@ class UnibetAPI {
    * @return null|\Psr\Http\Message\ResponseInterface
    * @throws \Sharapov\UnibetPHP\UnibetAPIException
    */
-  private function _request($responseFormat = 'json') {
+  private function _request( $responseFormat = 'json' ) {
     if ( ! isset( $this->_queryParams['app_id'] ) or ! isset( $this->_queryParams['app_key'] ) ) {
       throw new UnibetAPIException( "AppId/AppKey are missing from the params array" );
     }
@@ -98,7 +135,7 @@ class UnibetAPI {
     try {
       $client = new Client( $this->_clientOptions );
 
-      $response = $client->get( $this->getClientOptions( 'base_uri' ) . trim( $this->_endpoint, '/' ) . '.'.ltrim($responseFormat, '.'), [ 'query' => $this->_queryParams ] );
+      $response = $client->get( $this->getClientOptions( 'base_uri' ) . trim( $this->_endpoint, '/' ) . '.' . ltrim( $responseFormat, '.' ), [ 'query' => $this->_queryParams ] );
 
       if ( $response->getStatusCode() == 200 ) {
         return $response;
