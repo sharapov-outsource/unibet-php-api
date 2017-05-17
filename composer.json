@@ -3,7 +3,7 @@
     "description": "A simple PHP implementation for Unibet's JSON API",
     "type": "library",
     "license": "GPL-3.0",
-    "keywords": ["Unibet", "API", "REST+JSON", "JSON"],
+    "keywords": ["Unibet", "API", "REST", "JSON", "Bookmaker", "Odds", "Betting"],
     "homepage": "http://sharapov.biz/",
     "authors": [
         {
